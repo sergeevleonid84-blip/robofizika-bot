@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Аудиогид</title>
+
+<style>
+.helper-bot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    max-width: 250px;
+    font-family: Arial, sans-serif;
+}
+.guide-object {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 15px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="guide-object" data-text="Это пример объекта. Наведите курсор, чтобы услышать описание.">
+    Пример объекта
+</div>
+
+<div id="helper-bot" class="helper-bot">
+    👋 Я аудиогид! Наведи мышкой на объект.
+</div>
+
+<script>
+function speak(text) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "ru-RU";
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
+}
+
+document.querySelectorAll('.guide-object').forEach(el => {
+    el.addEventListener('mouseover', () => {
+        speak(el.dataset.text);
+    });
+});
+
+window.addEventListener('load', () => {
+    speak("Здравствуйте! Я ваш аудиогид. Наведите курсор на объект, чтобы услышать описание.");
+});
+</script>
+
+</body>
+</html>
